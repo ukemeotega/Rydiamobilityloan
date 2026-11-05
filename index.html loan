@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rydia Mobility and Loans Ltd - Apply Now</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+body { background:#f4f6f9; color:#222; }
+header { background:#0a3d62; color:white; padding:25px 15px; text-align:center; }
+header h1 { font-size:30px; }
+header p { opacity:0.95; margin-top:6px; line-height:1.5; }
+.container { max-width:1050px; margin:20px auto; padding:15px; }
+.card { background:white; padding:25px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.1); margin-bottom:20px; }
+h2 { color:#0a3d62; margin-bottom:15px; border-bottom:2px solid #0a3d62; padding-bottom:8px; }
+h3 { color:#0a3d62; margin:18px 0 10px; }
+label { display:block; margin:12px 0 5px; font-weight:bold; font-size:14px; }
+input, select, textarea { width:100%; padding:12px; border:1px solid #ccc; border-radius:8px; font-size:16px; }
+button, .btn { background:#0a3d62; color:white; padding:14px 25px; border:none; border-radius:8px; cursor:pointer; font-size:16px; width:100%; margin-top:15px; display:block; text-align:center; text-decoration:none; }
+button:hover { background:#1e6fa8; }
+button.secondary { background:#25D366; }
+.result { background:#e8f5e9; padding:15px; border-radius:8px; margin-top:15px; display:none; }
+table { width:100%; border-collapse:collapse; margin-top:15px; font-size:14px; }
+th, td { border:1px solid #ddd; padding:8px; text-align:left; }
+th { background:#0a3d62; color:white; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; }
+@media(max-width:650px){ .grid, .grid3{ grid-template-columns:1fr; } }
+.success { background:#d4edda; color:#155724; padding:15px; border-radius:8px; display:none; margin-top:15px; }
+.badge { background:#ffc107; color:#222; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:bold; display:inline-block; margin-top:8px; }
+.footer { text-align:center; padding:20px; color:#666; font-size:14px; }
+.print-note { background:#fff3cd; padding:12px; border-radius:8px; font-size:14px; margin-top:10px; }
+.tab-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px; }
+.tab-btns button { width:auto; margin:0; padding:10px 16px; }
+</style>
+</head>
+<body>
+<header>
+<h1>RYDIA MOBILITY AND LOANS LTD</h1>
+<p>19 Alhaja Shifau Street, Dopemu Road, Lagos State.<br>Tel: 08144725052 | Email: ufuomaotega2013@gmail.com</p>
+<p><span class="badge">DAILY REPAYMENT - 20 WORKING DAYS</span> &nbsp; <span class="badge">FAST APPROVAL</span></p>
+</header>
+<div class="container">
+<div class="card" style="text-align:center">
+<div class="tab-btns" style="justify-content:center">
+<button onclick="showTab('calc')">Calculator</button>
+<button onclick="showTab('borrower')">Borrower Form</button>
+<button onclick="showTab('guarantor')">Guarantor Form</button>
+<button onclick="showTab('receipt')">Receipt</button>
+<button onclick="showTab('schedule')">Schedule</button>
+</div>
+<p>One website for everything - Calculator + Application + Guarantor + Receipt + Repayment Tracking</p>
+</div>
+
+<div class="card" id="tab-calc">
+<h2>1. 20-Day Daily Calculator (Your Main Product)</h2>
+<div class="grid">
+<div><label>Loan Amount (NGN)</label><input type="number" id="amount" value="100000" min="10000" oninput="calcDaily()"></div>
+<div><label>Interest Rate (%) for 20 days</label><input type="number" id="rate" value="20" step="0.1" oninput="calcDaily()"></div>
+</div>
+<button onclick="calcDaily()">Calculate Daily Payment</button>
+<div class="result" id="calcResult" style="display:block"></div>
+<h3>Quick Price List - 20% Interest</h3>
+<table><tr><th>Loan</th><th>Interest</th><th>Total</th><th>Daily x 20</th></tr>
+<tr><td>50,000</td><td>10,000</td><td>60,000</td><td><b>3,000/day</b></td></tr>
+<tr><td>100,000</td><td>20,000</td><td>120,000</td><td><b>6,000/day</b></td></tr>
+<tr><td>200,000</td><td>40,000</td><td>240,000</td><td><b>12,000/day</b></td></tr>
+<tr><td>500,000</td><td>100,000</td><td>600,000</td><td><b>30,000/day</b></td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>Eligibility Check</h2>
+<div class="grid">
+<div><label>Do you have valid ID? (NIN / License)</label><select id="license"><option value="yes">Yes</option><option value="no">No</option></select></div>
+<div><label>Monthly Income (NGN)</label><input type="number" id="income" placeholder="e.g. 150000"></div>
+<div><label>Do you have a Guarantor?</label><select id="guarantorCheck"><option value="yes">Yes</option><option value="no">No</option></select></div>
+<div><label>Can you pay daily for 20 days?</label><select id="dailyCheck"><option value="yes">Yes</option><option value="no">No</option></select></div>
+</div>
+<button onclick="checkEligibility()">Check Eligibility</button>
+<div class="result" id="eligResult"></div>
+</div>
+
+<div class="card" id="tab-borrower"><h2>2. Borrower / Loan Application Form</h2>
+<p>Fill this form - it is different from Guarantor Form</p>
+<form id="loanForm" onsubmit="submitLoan(event)">
+<div class="grid">
+<div><label>Full Name *</label><input type="text" id="bName" required placeholder="Full name"></div>
+<div><label>Phone *</label><input type="tel" id="bPhone" required placeholder="080..."></div>
+<div><label>Email</label><input type="email" id="bEmail" placeholder="you@email.com"></div>
+<div><label>Residential Address</label><input type="text" placeholder="Your address"></div>
+<div><label>Date of Birth</label><input type="date"></div>
+<div><label>BVN</label><input type="text" placeholder="11 digits"></div>
+<div><label>ID Type</label><select><option>NIN</option><option>Driver's License</option><option>Passport</option><option>Voter's Card</option></select></div>
+<div><label>ID Number</label><input type="text"></div>
+<div><label>Employment / Business</label><select><option>Employed</option><option>Self-Employed</option><option>Business Owner</option></select></div>
+<div><label>Monthly Income</label><input type="number" placeholder="e.g. 200000"></div>
+<div><label>Loan Type</label><select><option>Personal</option><option>Mobility / Vehicle</option><option>Business</option><option>Emergency</option></select></div>
+<div><label>Amount Requested</label><input type="number" id="reqAmount" placeholder="e.g. 100000"></div>
+<div><label>Bank Name</label><input type="text"></div>
+<div><label>Account Number</label><input type="text"></div>
+</div>
+<label>Purpose of Loan</label><textarea rows="2" placeholder="e.g. Buy keke for commercial use"></textarea>
+<label>Declaration: I confirm all info is true and I agree to pay daily for 20 working days.</label>
+<button type="submit">Submit Borrower Application</button>
+</form>
+<div class="success" id="successMsg">Application received! Our team at 08144725052 will contact you within 24 hours. Address: 19 Alhaja Shifau Street, Dopemu Road, Lagos.</div>
+<button class="secondary" onclick="sendWhatsApp()">Send Application via WhatsApp to 08144725052</button>
+</div>
+
+<div class="card" id="tab-guarantor">
+<h2>3. Guarantor's Form (Separate Form)</h2>
+<p>To be filled by the person standing for the borrower - NOT the borrower.</p>
+<form onsubmit="submitGuarantor(event)">
+<div class="grid">
+<div><label>Applicant Being Guaranteed *</label><input type="text" required placeholder="Borrower full name"></div>
+<div><label>Guarantor Full Name *</label><input type="text" required></div>
+<div><label>Guarantor Phone *</label><input type="tel" required></div>
+<div><label>Relationship to Applicant</label><input type="text" placeholder="e.g. Brother, Employer, Friend"></div>
+<div><label>Guarantor Address</label><input type="text"></div>
+<div><label>ID Type & Number</label><input type="text"></div>
+<div><label>Employer / Business</label><input type="text"></div>
+<div><label>Monthly Income</label><input type="number"></div>
+<div><label>Amount Guaranteed</label><input type="number" placeholder="e.g. 120000"></div>
+<div><label>How Long Have You Known Applicant?</label><input type="text"></div>
+</div>
+<label><input type="checkbox" required style="width:auto"> I voluntarily stand as guarantor and agree to repay if borrower defaults.</label>
+<button type="submit">Submit Guarantor Form</button>
+</form>
+<div class="success" id="guarantorSuccess">Guarantor form received! Thank you.</div>
+</div>
+
+<div class="card" id="tab-receipt">
+<h2>4. Payment Receipt (Daily Collection)</h2>
+<div class="grid">
+<div><label>Receipt No</label><input type="text" id="receiptNo" value="RYD-001"></div>
+<div><label>Date</label><input type="date" id="receiptDate"></div>
+<div><label>Received From (Customer)</label><input type="text" id="receiptName"></div>
+<div><label>Amount Paid Today</label><input type="number" id="receiptAmt" oninput="updateReceipt()"></div>
+<div><label>Day of 20</label><input type="number" id="receiptDay" min="1" max="20" value="1" oninput="updateReceipt()"></div>
+<div><label>Payment Mode</label><select id="receiptMode"><option>Cash</option><option>Transfer</option><option>POS</option></select></div>
+<div><label>Outstanding Balance</label><input type="number" id="receiptBal"></div>
+<div><label>Collector Name</label><input type="text"></div>
+</div>
+<button onclick="printReceipt()">Print / Save Receipt</button>
+<div id="receiptPreview" style="border:1px dashed #0a3d62; padding:15px; margin-top:15px;">
+<b>RYDIA MOBILITY AND LOANS LTD</b><br>19 Alhaja Shifau Street, Dopemu Road, Lagos | 08144725052<br><br>
+<span id="rPreview">Receipt preview will appear here...</span>
+</div>
+</div>
+
+<div class="card" id="tab-schedule">
+<h2>5. 20-Day Repayment Schedule</h2>
+<p>Enter loan amount & interest to generate full 20-day table automatically.</p>
+<div class="grid3">
+<div><label>Loan Amount</label><input type="number" id="schLoan" value="100000" oninput="genSchedule()"></div>
+<div><label>Interest %</label><input type="number" id="schRate" value="20" oninput="genSchedule()"></div>
+<div><label>Start Date</label><input type="date" id="schStart" onchange="genSchedule()"></div>
+</div>
+<button onclick="genSchedule()">Generate 20-Day Schedule</button>
+<div id="schedule"></div>
+<div class="print-note">Declaration: I agree to pay daily for 20 working days without default. If I default, my guarantor will be held responsible.<br><br>Borrower Signature: ________________ &nbsp; Guarantor Signature: ________________ &nbsp; Date: ____________<br><br>For Rydia Mobility and Loans Ltd: Signature/Stamp: ________________</div>
+<button onclick="window.print()">Print All Forms</button>
+</div>
+
+<div class="card">
+<h2>Contact Us</h2>
+<p><strong>Phone / WhatsApp:</strong> 08144725052</p>
+<p><strong>Email:</strong> ufuomaotega2013@gmail.com</p>
+<p><strong>Office:</strong> 19 Alhaja Shifau Street, Dopemu Road, Lagos State.</p>
+<p><strong>Hours:</strong> Monday - Saturday, 8am - 6pm (Working days for collection)</p>
+</div>
+</div>
+<div class="footer">Rydia Mobility and Loans Ltd | Confidential | 08144725052 | ufuomaotega2013@gmail.com</div>
+
+<script>
+function calcDaily(){
+ let P = parseFloat(document.getElementById('amount').value)||0;
+ let pct = parseFloat(document.getElementById('rate').value)||0;
+ let interest = P*pct/100;
+ let total = P+interest;
+ let daily = total/20;
+ let el = document.getElementById('calcResult');
+ el.style.display='block';
+ el.innerHTML = `<p><strong>Loan:</strong> NGN ${P.toLocaleString()}</p><p><strong>Interest (${pct}%):</strong> NGN ${interest.toLocaleString()}</p><p><strong>Total Repayable:</strong> NGN ${total.toLocaleString()}</p><p style="font-size:20px;color:#0a3d62"><strong>Daily Payment: NGN ${daily.toLocaleString(undefined,{maximumFractionDigits:0})} x 20 days</strong></p>`;
+ return daily;
+}
+function checkEligibility(){
+ let idOk = document.getElementById('license').value;
+ let income = parseFloat(document.getElementById('income').value)||0;
+ let g = document.getElementById('guarantorCheck').value;
+ let d = document.getElementById('dailyCheck').value;
+ let msg='';
+ if(idOk==='no') msg+='You need valid ID. ';
+ if(income<50000) msg+='Income too low. ';
+ if(g==='no') msg+='You need guarantor. ';
+ if(d==='no') msg+='You must be able to pay daily. ';
+ let res=document.getElementById('eligResult'); res.style.display='block';
+ if(msg==='') res.innerHTML='<strong>Eligible!</strong> You fit apply now.';
+ else res.innerHTML='<strong>Not eligible yet:</strong> '+msg;
+}
+function submitLoan(e){ e.preventDefault(); document.getElementById('successMsg').style.display='block'; }
+function submitGuarantor(e){ e.preventDefault(); document.getElementById('guarantorSuccess').style.display='block'; }
+function sendWhatsApp(){
+ let name=document.getElementById('bName').value||'';
+ let phone=document.getElementById('bPhone').value||'';
+ let amt=document.getElementById('reqAmount').value||'';
+ let text=`Hello Rydia Mobility and Loans Ltd, I want to apply for loan. Name: ${name}, Phone: ${phone}, Amount: ${amt}.`;
+ window.open('https://wa.me/2348144725052?text='+encodeURIComponent(text), '_blank');
+}
+function updateReceipt(){
+ let name=document.getElementById('receiptName').value||'___';
+ let amt=document.getElementById('receiptAmt').value||'0';
+ let day=document.getElementById('receiptDay').value||'1';
+ let bal=document.getElementById('receiptBal').value||'0';
+ document.getElementById('rPreview').innerHTML=`Receipt No: ${document.getElementById('receiptNo').value} | Date: ${document.getElementById('receiptDate').value}<br>Received From: ${name}<br>Amount Paid: NGN ${Number(amt).toLocaleString()} | Day ${day} of 20 | Mode: ${document.getElementById('receiptMode').value}<br>Outstanding Balance: NGN ${Number(bal).toLocaleString()}<br>Thank you!`;
+}
+function printReceipt(){ updateReceipt(); window.print(); }
+function genSchedule(){
+ let P=parseFloat(document.getElementById('schLoan').value)||0;
+ let pct=parseFloat(document.getElementById('schRate').value)||0;
+ let total=P+P*pct/100;
+ let daily=total/20;
+ let start=document.getElementById('schStart').value;
+ let startDate=start?new Date(start):new Date();
+ let balance=total;
+ let html=`<p><b>Total Repayable: NGN ${total.toLocaleString()} | Daily: NGN ${daily.toLocaleString(undefined,{maximumFractionDigits:0})}</b></p><table><tr><th>Day</th><th>Due Date (Working Days)</th><th>Amount Due</th><th>Amount Paid</th><th>Balance</th><th>Collector Sign</th><th>Customer Sign</th></tr>`;
+ for(let i=1;i<=20;i++){
+   let d=new Date(startDate); let added=0; let cur=new Date(d);
+   while(added<i-1){ cur.setDate(cur.getDate()+1); if(cur.getDay()!==0) added++; }
+   let ds=cur.toLocaleDateString();balance-=daily; if(balance<0) balance=0;
+   html+=`<tr><td>${i}</td><td>${ds}</td><td>NGN ${daily.toLocaleString(undefined,{maximumFractionDigits:0})}</td><td>______</td><td>NGN ${balance.toLocaleString(undefined,{maximumFractionDigits:0})}</td><td>______</td><td>______</td></tr>`;
+ }
+ html+='</table>';
+ document.getElementById('schedule').innerHTML=html;
+}
+function showTab(name){
+ const map={'calc':'tab-calc','borrower':'tab-borrower','guarantor':'tab-guarantor','receipt':'tab-receipt','schedule':'tab-schedule'};
+ let el=document.getElementById(map[name]); if(el) el.scrollIntoView({behavior:'smooth'});
+}
+calcDaily(); genSchedule(); updateReceipt();
+</script>
+</body>
+</html>
