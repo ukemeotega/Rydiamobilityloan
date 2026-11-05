@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rydia Mobility Loan website</title>
+<style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { margin:0; background:#f4f7fb; color:#222; }
+  header { background:#0d47a1; color:#fff; padding:20px; text-align:center; }
+  header h1 { margin:0; font-size:24px; }
+  header p { margin:5px 0 0; font-size:14px; opacity:0.9; }
+  .container { max-width:900px; margin:20px auto; padding:0 15px; }
+  .card { background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); margin-bottom:20px; }
+  h2 { color:#0d47a1; margin-top:0; }
+  label { display:block; margin:12px 0 5px; font-weight:bold; font-size:14px; }
+  input, select, textarea { width:100%; padding:11px; border:1px solid #ccc; border-radius:8px; font-size:15px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+  @media(max-width:600px){ .grid{ grid-template-columns:1fr; } }
+  button { background:#0d47a1; color:#fff; border:none; padding:13px 20px; border-radius:8px; width:100%; font-size:16px; cursor:pointer; margin-top:15px; }
+  button:hover { background:#08306b; }
+  .result { background:#e3f2fd; padding:15px; border-radius:8px; margin-top:15px; display:none; }
+  .checkbox-group label { display:inline-block; font-weight:normal; margin-right:10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>RYDIA MOBILITY LOAN</h1>
+  <p>19 Alhaji Shifau, Dopemu, Lagos State</p>
+  <p>Loan Leader's Nomination Form - Group of Five (5)</p>
+</header>
+
+<div class="container">
+
+  <!-- LOAN CALCULATOR -->
+  <div class="card">
+    <h2>Loan Calculator</h2>
+    <div class="grid">
+      <div>
+        <label>Loan Amount (₦)</label>
+        <input type="number" id="amount" value="100000">
+      </div>
+      <div>
+        <label>Interest Rate (%) per month</label>
+        <input type="number" id="rate" value="5">
+      </div>
+      <div>
+        <label>Duration (Months)</label>
+        <input type="number" id="months" value="6">
+      </div>
+      <div>
+        <label>Group Members (Max 5)</label>
+        <select id="members">
+          <option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option>
+        </select>
+      </div>
+    </div>
+    <button onclick="calculate()">Calculate Loan</button>
+    <div class="result" id="calcResult"></div>
+  </div>
+
+  <!-- LEADER FORM -->
+  <div class="card">
+    <h2>Leader's Personal Details</h2>
+    <form id="loanForm" onsubmit="submitForm(event)">
+      <div class="grid">
+        <div><label>Full Name (Leader)</label><input type="text" required></div>
+        <div><label>Phone Number</label><input type="tel" required></div>
+        <div><label>NIN</label><input type="text" required></div>
+        <div><label>Account No</label><input type="text" required></div>
+        <div><label>Date of Birth</label><input type="date" required></div>
+        <div><label>Marital Status</label>
+          <select><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+        </div>
+      </div>
+
+      <label>Address</label>
+      <textarea rows="2" required></textarea>
+
+      <label>Monthly Financial Status (Compulsory)</label>
+      <div class="checkbox-group">
+        <label><input type="radio" name="income" required> 50k - 100k</label>
+        <label><input type="radio" name="income"> 100k - 150k</label>
+        <label><input type="radio" name="income"> 150k - 200k</label>
+        <label><input type="radio" name="income"> 200k - 250k</label>
+        <label><input type="radio" name="income"> 250k - 300k</label>
+        <label><input type="radio" name="income"> 300k - Upwards</label>
+      </div>
+
+      <h2 style="margin-top:25px;">Guarantor Details</h2>
+      <div class="grid">
+        <div><label>Guarantor Full Name</label><input type="text" required></div>
+        <div><label>Guarantor Phone</label><input type="tel" required></div>
+        <div><label>Guarantor NIN</label><input type="text" required></div>
+        <div><label>Relationship to Leader</label><input type="text" required></div>
+      </div>
+
+      <h2 style="margin-top:25px;">Other Group Members (4 Individuals)</h2>
+      <div class="grid">
+        <div><label>Member 1 Name</label><input type="text"></div>
+        <div><label>Member 1 Phone</label><input type="tel"></div>
+        <div><label>Member 2 Name</label><input type="text"></div>
+        <div><label>Member 2 Phone</label><input type="tel"></div>
+        <div><label>Member 3 Name</label><input type="text"></div>
+        <div><label>Member 3 Phone</label><input type="tel"></div>
+        <div><label>Member 4 Name</label><input type="text"></div>
+        <div><label>Member 4 Phone</label><input type="tel"></div>
+      </div>
+
+      <button type="submit">Submit Application</button>
+      <p id="success" style="color:green; text-align:center; margin-top:10px;"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+function calculate(){
+  const amount = parseFloat(document.getElementById('amount').value);
+  const rate = parseFloat(document.getElementById('rate').value) / 100;
+  const months = parseInt(document.getElementById('months').value);
+  const members = parseInt(document.getElementById('members').value);
+
+  const interest = amount * rate * months;
+  const total = amount + interest;
+  const monthly = total / months;
+  const perPerson = total / members;
+
+  const result = document.getElementById('calcResult');
+  result.style.display = 'block';
+  result.innerHTML = `
+    <strong>Loan Summary:</strong><br>
+    Principal: ₦${amount.toLocaleString()}<br>
+    Total Interest: ₦${interest.toLocaleString()}<br>
+    <strong>Total Repayment: ₦${total.toLocaleString()}</strong><br>
+    Monthly Repayment: ₦${monthly.toLocaleString()}<br>
+    Per Person (${members} members): ₦${perPerson.toLocaleString()}
+  `;
+}
+
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('success').innerText = 'Application submitted successfully! Ruchie Mobility Loan will contact you.';
+  document.getElementById('loanForm').reset();
+}
+</script>
+</body>
+</html>
